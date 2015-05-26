@@ -12,13 +12,18 @@ import UIKit
 class SentMemeTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
     
     var memes: [Meme]!
+    var appDelegate: AppDelegate!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        memes = (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        memes = appDelegate.memes
         
-        if (memes.count == 0) {self.invokeEditMemeController()}
+        if (memes.count == 0 && appDelegate.firstLaunch) {
+            self.invokeEditMemeController()
+            appDelegate.firstLaunch = false
+        }
         self.tableView.reloadData()
     }
     

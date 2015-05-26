@@ -11,6 +11,7 @@ import UIKit
 class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     var memes: [Meme]!
+    var appDelegate: AppDelegate!
   
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var chosenImageView: UIImageView!
@@ -23,6 +24,8 @@ class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         // I haz camera?
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
@@ -59,9 +62,6 @@ class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         memes = appDelegate.memes
-        
-        if (memes.count == 0) {self.cancelButton.enabled = false}
-    
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -124,7 +124,7 @@ class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate,
             image: self.chosenImageView.image,
             memedImage: memedImage
         )
-        (UIApplication.sharedApplication().delegate as! AppDelegate).memes.append(meme)
+        appDelegate.memes.append(meme)
     }
     
     // MARK: UIImagePickerController delegate methods
