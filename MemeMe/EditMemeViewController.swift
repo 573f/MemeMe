@@ -96,7 +96,7 @@ class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate,
             completed: Bool,
             returnedItems: [AnyObject]!,
             activityError: NSError!
-            ) -> Void in
+        ) -> Void in
             if (completed) {self.save()}
             self.dismissViewControllerAnimated(true, completion: nil)
         }

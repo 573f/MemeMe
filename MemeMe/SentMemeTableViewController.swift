@@ -31,15 +31,23 @@ class SentMemeTableViewController: UITableViewController, UITableViewDelegate, U
         self.presentViewController(controller, animated: true, completion: nil)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "memeDetailFromTable" {
+            if let indexPaths = tableView?.indexPathsForSelectedRows() as? [NSIndexPath] {
+                let index = indexPaths[0].row
+                let memeDetailViewController = segue.destinationViewController as! MemeDetailViewController
+                memeDetailViewController.meme = memes[index]
+            }
+        }
+    }
+    
     // MARK: tableView dataSource methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        NSLog("Memes: %d", memes.count)
         return memes.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        NSLog("Getting cell for row %d", indexPath.row)
         let cell = tableView.dequeueReusableCellWithIdentifier("memeTableCell") as! UITableViewCell
         let meme = self.memes[indexPath.row]
         
